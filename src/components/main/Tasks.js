@@ -1,19 +1,33 @@
-import { Table } from "react-bootstrap";
+import { useState } from "react";
+import { Button, Table } from "react-bootstrap";
 import { AddStatus } from "../update/AddStatus";
+import { UpdateModal } from "../update/UpdateModal";
 
 export const Tasks = (props) => {
+
+  const [show, setShow] = useState(false);
+
+
+  const handleShowModal = () => {
+    setShow(true);
+  }
+
   return (
-    <div>
-      <Table striped="columns">
+    <div >
+      
+      <Table striped="columns" style={{width:'85%', margin: '0 auto', border:'5px solid'}}>
         <thead>
           <tr>
             <th>#</th>
             <th>Title</th>
             <th>Description</th>
             <th>Status</th>
+            {
+              props.role === 'admin' &&
             <th>
                 Admin
             </th>
+            }
           </tr>
         </thead>
         <tbody>
@@ -48,6 +62,21 @@ export const Tasks = (props) => {
                     </tbody>
                     </Table>
                 </td>
+                {
+                  props.role === 'admin' &&
+                <td>
+                  <Button onClick={() => props.handleDelete(item.id)}>Delete</Button>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <Button onClick={handleShowModal} >Edit</Button>
+                  {
+                    show && 
+                  <UpdateModal show={show} handleClose={() => {setShow(false);
+                  window.location.reload()}} id={item.id}/>
+                  }
+                </td>
+                }
               </tr>
             );
           })}

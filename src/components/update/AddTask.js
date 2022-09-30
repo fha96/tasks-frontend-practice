@@ -8,7 +8,7 @@ export const AddTask = () => {
   const [tasks, setTasks] = useState([]);
   const [errMsg, setErrMsg] = useState("");
   const [token, setToken] = useState(cookies.load('token'));
-
+  const [role, setRole] = useState('');
 
   const handleLogout = () => {
     cookies.remove('token');
@@ -17,6 +17,28 @@ export const AddTask = () => {
     cookies.remove('role');
     setToken(cookies.load('token'));
   }
+  
+  const handleDelete = (id) => {
+    const url = `http://localhost:3001/task/${id}`;
+    const url2 = `http://localhost:3001/task`;
+    axios.delete(url,{
+        headers: {
+            Authorization: `Bearer ${cookies.load('token')}`
+        }
+    })
+    .then(resolve =>{
+        alert(resolve.data);
+        axios.get(url2,{
+          headers:{
+              Authorization: `Bearer ${cookies.load('token')}`
+          }
+      }).then(resolve => setTasks(resolve.data))
+      .catch(rejected => setErrMsg("Error while fetching data"));
+    })
+    .catch(rejected => alert(rejected.response.data));
+
+  };
+
 
   const handleAdd = (e) => {
     e.preventDefault();
@@ -52,6 +74,7 @@ export const AddTask = () => {
       .then((resolve) => {
         console.log(resolve.data);
         setTasks((prevValue) => (prevValue = resolve.data));
+        setRole(prevValue=> prevValue = cookies.load('role'));
       })
       .catch((rejected) => setErrMsg("Error while fetching data"));
   }, []);
@@ -76,7 +99,7 @@ export const AddTask = () => {
           Add Task
         </Button>
       </Form>
-      <Tasks tasks={tasks}/>
+      <Tasks tasks={tasks} role={role} handleDelete={handleDelete}/>
       {
         errMsg && 
         <h2>{errMsg}</h2>
