@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { Button, Table } from "react-bootstrap";
 import { AddStatus } from "../update/AddStatus";
 import { UpdateModal } from "../update/UpdateModal";
 
+
 export const Tasks = (props) => {
+
 
   const [show, setShow] = useState(false);
 
@@ -14,7 +16,8 @@ export const Tasks = (props) => {
 
   return (
     <div >
-      
+   
+
       <Table striped="columns" style={{width:'85%', margin: '0 auto', border:'5px solid'}}>
         <thead>
           <tr>
@@ -82,6 +85,7 @@ export const Tasks = (props) => {
           })}
         </tbody>
       </Table>
+      
       
     </div>
   );
