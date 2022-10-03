@@ -19,8 +19,8 @@ export const AddTask = () => {
   }
   
   const handleDelete = (id) => {
-    const url = `http://localhost:3001/task/${id}`;
-    const url2 = `http://localhost:3001/task`;
+    const url = `${process.env.REACT_APP_API}/task/${id}`;
+    const url2 = `${process.env.REACT_APP_API}/task`;
     axios.delete(url,{
         headers: {
             Authorization: `Bearer ${cookies.load('token')}`
@@ -42,7 +42,7 @@ export const AddTask = () => {
 
   const handleAdd = (e) => {
     e.preventDefault();
-    const url = `http://localhost:3001/task`;
+    const url = `${process.env.REACT_APP_API}/task`;
     let data = {
         title:e.target.formBasicTitle.value,
         description: e.target.formBasicDescription.value
@@ -64,7 +64,7 @@ export const AddTask = () => {
   };
 
   useEffect(() => {
-    const url = `http://localhost:3001/task`;
+    const url = `${process.env.REACT_APP_API}/task`;
     axios
       .get(url, {
         headers: {

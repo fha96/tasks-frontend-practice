@@ -9,7 +9,7 @@ export const Signup = () => {
     const [show, setShow] = useState(false);
 const handleSignUp = (e) => {
     e.preventDefault();
-    const url = `http://localhost:3001/signup`;
+    const url = `${process.env.REACT_APP_API}/signup`;
     let data = {
         email:e.target.formBasicEmail.value,
         userName:e.target.formBasicUserName.value,

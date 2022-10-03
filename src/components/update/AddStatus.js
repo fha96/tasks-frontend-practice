@@ -10,7 +10,7 @@ export const AddStatus = (props) => {
     const handleAddStatus = (e) => {
 
         e.preventDefault();
-        const url = `http://localhost:3001/status/${props.id}/${cookies.load('id')}`;
+        const url = `${process.env.REACT_APP_API}/${props.id}/${cookies.load('id')}`;
        let data = {
             description:e.target.status.value,
             name: cookies.load('userName')
