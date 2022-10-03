@@ -79,10 +79,10 @@ export const AddTask = () => {
       .catch((rejected) => setErrMsg("Error while fetching data"));
   }, []);
   return (
-    <div>
+    <div >
         {
             token&&
-            <div>
+            <div >
                 <button style={{float:'left', margin: '-25px 0px 0px 25px'}} onClick={handleLogout}>Logout</button>
       <Form className="form-signup" onSubmit={handleAdd}>
         <Form.Group className="mb-3" controlId="formBasicTitle">
@@ -108,7 +108,7 @@ export const AddTask = () => {
         }
         {
             !cookies.load('token') &&
-            <h4>Token Expired !!<br/> Signin again </h4>
+            <h4 data-testid='task'>Token Expired !!<br/> Signin again </h4>
         }
     </div>
   );
