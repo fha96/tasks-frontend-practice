@@ -1,8 +1,11 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import cookies from 'react-cookies';
+import { TaskContext } from "../../context/TasksContext";
+
 
 export const AddStatus = (props) => {
+    const {getTasks} = useContext(TaskContext);
 
     const [msg, setMsg] = useState('');
     
@@ -10,7 +13,7 @@ export const AddStatus = (props) => {
     const handleAddStatus = (e) => {
 
         e.preventDefault();
-        const url = `http://localhost:3001/status/${props.id}/${cookies.load('id')}`;
+        const url = `${process.env.REACT_APP_EXPRESS_URL}/status/${props.id}/${cookies.load('id')}`;
        let data = {
             description:e.target.status.value,
             name: cookies.load('userName')
@@ -21,7 +24,7 @@ export const AddStatus = (props) => {
             }
         }).then(resolve => {
           setMsg('added');
-          window.location.reload();
+            getTasks();
         } ).catch(rejected => alert(rejected.response.data));
     }
 

@@ -7,7 +7,7 @@ export const UpdateModal = (props) => {
 
     const handleEdit = (e) => {
         e.preventDefault();
-        const url =`http://localhost:3001/task/${props.id}`;
+        const url =`${process.env.REACT_APP_EXPRESS_URL}/task/${props.id}`;
         const newData = {
             title:e.target.formBasicTitle.value,
             description:e.target.formBasicDescription.value

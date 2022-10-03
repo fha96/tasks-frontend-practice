@@ -9,7 +9,9 @@ export const Signup = () => {
     const [show, setShow] = useState(false);
 const handleSignUp = (e) => {
     e.preventDefault();
-    const url = `http://localhost:3001/signup`;
+    const url = `${process.env.REACT_APP_EXPRESS_URL}/signup`;
+    console.log('process',process.env.REACT_APP_EXPRESS_URL);
+
     let data = {
         email:e.target.formBasicEmail.value,
         userName:e.target.formBasicUserName.value,
@@ -63,7 +65,7 @@ const handleSignUp = (e) => {
             <option value="admin">Admin</option>
           </Form.Select>
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button  variant="primary" type="submit">
           Submit
         </Button>
         
