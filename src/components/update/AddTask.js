@@ -19,8 +19,8 @@ export const AddTask = () => {
   }
   
   const handleDelete = (id) => {
-    const url = `https://white-board-v2.herokuapp.com/task/${id}`;
-    const url2 = `https://white-board-v2.herokuapp.com/task`;
+    const url = `${process.env.REACT_APP_EXPRESS_URL}/task/${id}`;
+    const url2 = `${process.env.REACT_APP_EXPRESS_URL}/task`;
     axios.delete(url,{
         headers: {
             Authorization: `Bearer ${cookies.load('token')}`
@@ -42,7 +42,7 @@ export const AddTask = () => {
 
   const handleAdd = (e) => {
     e.preventDefault();
-    const url = `https://white-board-v2.herokuapp.com/task`;
+    const url = `${process.env.REACT_APP_EXPRESS_URL}/task`;
     let data = {
         title:e.target.formBasicTitle.value,
         description: e.target.formBasicDescription.value

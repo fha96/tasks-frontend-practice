@@ -9,7 +9,7 @@ export const Signup = () => {
     const [show, setShow] = useState(false);
 const handleSignUp = (e) => {
     e.preventDefault();
-    const url = `https://white-board-v2.herokuapp.com/signup`;
+    const url = `${process.env.REACT_APP_EXPRESS_URL}/signup`;
     console.log('process',process.env.REACT_APP_EXPRESS_URL);
 
     let data = {
@@ -65,7 +65,7 @@ const handleSignUp = (e) => {
             <option value="admin">Admin</option>
           </Form.Select>
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button data-testid='test' variant="primary" type="submit">
           Submit
         </Button>
         

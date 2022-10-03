@@ -7,7 +7,7 @@ export const UpdateModal = (props) => {
 
     const handleEdit = (e) => {
         e.preventDefault();
-        const url =`https://white-board-v2.herokuapp.com/task/${props.id}`;
+        const url =`${process.env.REACT_APP_EXPRESS_URL}/task/${props.id}`;
         const newData = {
             title:e.target.formBasicTitle.value,
             description:e.target.formBasicDescription.value

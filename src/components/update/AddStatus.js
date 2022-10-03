@@ -13,7 +13,7 @@ export const AddStatus = (props) => {
     const handleAddStatus = (e) => {
 
         e.preventDefault();
-        const url = `https://white-board-v2.herokuapp.com/status/${props.id}/${cookies.load('id')}`;
+        const url = `${process.env.REACT_APP_EXPRESS_URL}/status/${props.id}/${cookies.load('id')}`;
        let data = {
             description:e.target.status.value,
             name: cookies.load('userName')
