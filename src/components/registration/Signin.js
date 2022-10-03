@@ -24,7 +24,7 @@ export const Signin = () => {
           <Form.Control type="password" placeholder="Password" />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button data-testid='test' id='signin' variant="primary" type="submit">
           Submit
         </Button>
 

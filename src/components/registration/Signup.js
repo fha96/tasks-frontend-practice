@@ -65,7 +65,7 @@ const handleSignUp = (e) => {
             <option value="admin">Admin</option>
           </Form.Select>
         </Form.Group>
-        <Button data-testid='test' variant="primary" type="submit">
+        <Button  variant="primary" type="submit">
           Submit
         </Button>
         
