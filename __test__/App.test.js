@@ -1,6 +1,6 @@
 import React from "react";
 import { render, waitFor, screen } from "@testing-library/react";
-import App from "../App";
+import App from "../src/App";
 import "@testing-library/jest-dom";
 import { BrowserRouter } from "react-router-dom";
 
