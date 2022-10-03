@@ -1,14 +1,14 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Form, Button } from "react-bootstrap";
 import cookies from 'react-cookies';
 import { Tasks } from "../main/Tasks";
+import { TaskContext } from "../../context/TasksContext";
 
 export const AddTask = () => {
-  const [tasks, setTasks] = useState([]);
-  const [errMsg, setErrMsg] = useState("");
+
+  const {errMsg, getTasks, setErrMsg, setTasks, tasks, role} = useContext(TaskContext);
   const [token, setToken] = useState(cookies.load('token'));
-  const [role, setRole] = useState('');
 
   const handleLogout = () => {
     cookies.remove('token');
@@ -19,8 +19,8 @@ export const AddTask = () => {
   }
   
   const handleDelete = (id) => {
-    const url = `${process.env.REACT_APP_API}/task/${id}`;
-    const url2 = `${process.env.REACT_APP_API}/task`;
+    const url = `https://white-board-v2.herokuapp.com/task/${id}`;
+    const url2 = `https://white-board-v2.herokuapp.com/task`;
     axios.delete(url,{
         headers: {
             Authorization: `Bearer ${cookies.load('token')}`
@@ -42,7 +42,7 @@ export const AddTask = () => {
 
   const handleAdd = (e) => {
     e.preventDefault();
-    const url = `${process.env.REACT_APP_API}/task`;
+    const url = `https://white-board-v2.herokuapp.com/task`;
     let data = {
         title:e.target.formBasicTitle.value,
         description: e.target.formBasicDescription.value
@@ -64,20 +64,9 @@ export const AddTask = () => {
   };
 
   useEffect(() => {
-    const url = `${process.env.REACT_APP_API}/task`;
-    axios
-      .get(url, {
-        headers: {
-          Authorization: `Bearer ${cookies.load("token")}`,
-        },
-      })
-      .then((resolve) => {
-        console.log(resolve.data);
-        setTasks((prevValue) => (prevValue = resolve.data));
-        setRole(prevValue=> prevValue = cookies.load('role'));
-      })
-      .catch((rejected) => setErrMsg("Error while fetching data"));
+    getTasks();
   }, []);
+  
   return (
     <div >
         {

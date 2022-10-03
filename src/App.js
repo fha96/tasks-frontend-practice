@@ -7,6 +7,7 @@ import { Signup } from "./components/registration/Signup";
 import { Signin } from "./components/registration/Signin";
 import { AddTask } from "./components/update/AddTask";
 import LoginContextProvider from "./context/LoginContext";
+import { TaskContextProvider } from "./context/TasksContext";
 
 function App() {
   return (
@@ -34,9 +35,11 @@ function App() {
         <Route
           path="/tasks"
           element={
+            <TaskContextProvider>
             <LoginContextProvider>
               <AddTask />
             </LoginContextProvider>
+            </TaskContextProvider>
           }
         />
       </Routes>

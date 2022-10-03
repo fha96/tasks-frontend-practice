@@ -9,7 +9,9 @@ export const Signup = () => {
     const [show, setShow] = useState(false);
 const handleSignUp = (e) => {
     e.preventDefault();
-    const url = `${process.env.REACT_APP_API}/signup`;
+    const url = `https://white-board-v2.herokuapp.com/signup`;
+    console.log('process',process.env.REACT_APP_EXPRESS_URL);
+
     let data = {
         email:e.target.formBasicEmail.value,
         userName:e.target.formBasicUserName.value,
