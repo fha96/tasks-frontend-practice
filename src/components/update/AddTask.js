@@ -7,7 +7,7 @@ import { TaskContext } from "../../context/TasksContext";
 
 export const AddTask = () => {
 
-  const {errMsg, getTasks, setErrMsg, setTasks, tasks, role} = useContext(TaskContext);
+  const {errMsg, getTasks, setErrMsg, setTasks, tasks} = useContext(TaskContext);
   const [token, setToken] = useState(cookies.load('token'));
 
   const handleLogout = () => {
@@ -15,6 +15,7 @@ export const AddTask = () => {
     cookies.remove('id');
     cookies.remove('userName');
     cookies.remove('role');
+    cookies.remove('capabilities');
     setToken(cookies.load('token'));
   }
   
@@ -88,7 +89,7 @@ export const AddTask = () => {
           Add Task
         </Button>
       </Form>
-      <Tasks tasks={tasks} role={role} handleDelete={handleDelete}/>
+      <Tasks tasks={tasks} handleDelete={handleDelete}/>
       {
         errMsg && 
         <h2>{errMsg}</h2>

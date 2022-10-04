@@ -30,10 +30,12 @@ const LoginContextProvider = (props) => {
         }
       )
       .then((resolve) => {
+        console.log('>>>>>>>>>>>>>>>>>',JSON.stringify( resolve.data.capabilities));
         cookies.save("userName", resolve.data.userName);
         cookies.save("id", resolve.data.id);
         cookies.save("role", resolve.data.role);
         cookies.save("token", resolve.data.token);
+        cookies.save('capabilities',JSON.stringify(resolve.data.capabilities));
         setShowError(false);
         setSuccess(true);
       })
