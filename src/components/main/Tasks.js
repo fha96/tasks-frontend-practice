@@ -5,7 +5,7 @@ import { UpdateModal } from "../update/UpdateModal";
 import { TaskContext } from "../../context/TasksContext";
 
 export const Tasks = (props) => {
-  const { getTasks } = useContext(TaskContext);
+  const { getTasks,canDo } = useContext(TaskContext);
   const [show, setShow] = useState(false);
 
   const handleShowModal = () => {
@@ -63,7 +63,8 @@ export const Tasks = (props) => {
                     </tbody>
                   </Table>
                 </td>
-                {props.role === "admin" && (
+                {
+                  canDo()&& (
                   <td>
                     <Button onClick={() => props.handleDelete(item.id)}>
                       Delete

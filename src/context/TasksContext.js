@@ -8,9 +8,11 @@ export const TaskContextProvider = (props) => {
   const [tasks, setTasks] = useState([]);
   const [role, setRole] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [capabilities, setCapabilities] = useState();
 
   const getTasks = () => {
     const url = `https://white-board-v2.herokuapp.com/task`;
+    
     axios
       .get(url, {
         headers: {
@@ -18,12 +20,20 @@ export const TaskContextProvider = (props) => {
         },
       })
       .then((resolve) => {
-        console.log(resolve.data);
         setTasks((prevValue) => (prevValue = resolve.data));
         setRole((prevValue) => (prevValue = cookies.load("role")));
+        setCapabilities(prevValue => prevValue = cookies.load('capabilities'));
       })
       .catch((rejected) => setErrMsg("Error while fetching data"));
   };
+
+  const canDo = () => {
+    if(capabilities.includes('delete' || 'update')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   const value = {
     getTasks,
     tasks,
@@ -31,7 +41,8 @@ export const TaskContextProvider = (props) => {
     role,
     errMsg,
     setErrMsg,
-    setRole
+    setRole,
+    canDo
   };
   return (
     <TaskContext.Provider value={value}>{props.children}</TaskContext.Provider>

@@ -108,8 +108,8 @@ export const Footer = () => {
           style={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
         >
           © 2021 Copyright:
-          <a className="text-reset fw-bold" href="https://mdbootstrap.com/">
-            MDBootstrap.com
+          <a className="text-reset fw-bold" href="https://github.com/fha96"  target='blank'>
+            Fahad Zidan
           </a>
         </div>
       </MDBFooter>
