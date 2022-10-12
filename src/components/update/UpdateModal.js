@@ -7,6 +7,7 @@ export const UpdateModal = (props) => {
 
     const handleEdit = (e) => {
         e.preventDefault();
+        console.log(props.id);
         const url =`${process.env.REACT_APP_EXPRESS_URL}/task/${props.id}`;
         const newData = {
             title:e.target.formBasicTitle.value,

@@ -1,14 +1,16 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer } from "react";
 import cookies from "react-cookies";
 import axios from "axios";
 import base64 from "base-64";
+import { loginReducer } from "../reducers/LoginReducers";
+import { initialState } from "../config/initials";
+import { actionType } from "../reducers/actionType";
 
 export const LoginContext = createContext();
 
 const LoginContextProvider = (props) => {
-  const [errMsg, setErrMsg] = useState("");
-  const [showError, setShowError] = useState(false);
-  const [success, setSuccess] = useState(false);
+  
+  const [state, dispatch] = useReducer(loginReducer, initialState);
 
   const handleSignin = (e) => {
     e.preventDefault();
@@ -30,33 +32,38 @@ const LoginContextProvider = (props) => {
         }
       )
       .then((resolve) => {
-        console.log('>>>>>>>>>>>>>>>>>',JSON.stringify( resolve.data.capabilities));
+        console.log(
+          ">>>>>>>>>>>>>>>>>",
+          JSON.stringify(resolve.data.capabilities)
+        );
         cookies.save("userName", resolve.data.userName);
         cookies.save("id", resolve.data.id);
         cookies.save("role", resolve.data.role);
         cookies.save("token", resolve.data.token);
-        cookies.save('capabilities',JSON.stringify(resolve.data.capabilities));
-        setShowError(false);
-        setSuccess(true);
+        cookies.save("capabilities", JSON.stringify(resolve.data.capabilities));
+    
+        dispatch({ type: actionType.LOGIN_SUCCESS });
       })
       .catch((rejected) => {
-        setShowError(true);
-        setErrMsg(rejected.response.data.message);
+
+        dispatch({
+          type: actionType.LOGIN_FAIL,
+          payload: {
+            errMsg: rejected.response.data.message,
+          },
+        });
       });
   };
 
   const value = {
-    errMsg,
-    setErrMsg,
-    showError,
-    setShowError,
-    success,
-    setSuccess,
-    handleSignin
+    state,
+    handleSignin,
   };
-  return <LoginContext.Provider value={value}>
-    {props.children}
-  </LoginContext.Provider>;
+  return (
+    <LoginContext.Provider value={value}>
+      {props.children}
+    </LoginContext.Provider>
+  );
 };
 
 export default LoginContextProvider;
