@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { LoginContext } from "../../context/LoginContext";
 
 export const Signin = () => {
-  const { handleSignin, success, showError, errMsg } = useContext(LoginContext);
+  const { handleSignin, state } = useContext(LoginContext);
 
   return (
     <div>
@@ -37,11 +37,11 @@ export const Signin = () => {
           </Form.Label>
         </Form.Group>
 
-        {success && <Navigate to="/tasks" />}
+        {state.success && <Navigate to="/tasks" />}
 
-        {showError && (
+        {state.showError && (
           <Form.Group className="mb-3">
-            <Form.Label>{errMsg} !</Form.Label>
+            <Form.Label>{state.errMsg} !</Form.Label>
           </Form.Group>
         )}
       </Form>
