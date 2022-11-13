@@ -12,7 +12,6 @@ import {
   Th,
   Td,
   TableContainer,
-  HStack,
 } from '@chakra-ui/react'
 export const Tasks = (props) => {
   const { getTasks, canDo } = useContext(TaskContext);
@@ -23,8 +22,7 @@ export const Tasks = (props) => {
   };
 
   return (
-    <>
-    <div>
+  
       <TableContainer
          m="auto"
          border="solid"
@@ -34,7 +32,7 @@ export const Tasks = (props) => {
          bgGradient="linear(#EDF2F7,#E2E8F0, #CBD5E0)"
          striped="columns"
         cellSpacing='5'
-      
+        w='-webkit-max-content'
         borderColor='blackAlpha.100'
       
       >
@@ -122,7 +120,6 @@ export const Tasks = (props) => {
         </Tbody>
       </Table>
       </TableContainer>
-    </div>
-    </>
+   
   );
 };
