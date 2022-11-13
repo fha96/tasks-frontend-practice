@@ -1,105 +1,142 @@
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
-import { Form, Button } from "react-bootstrap";
-import cookies from 'react-cookies';
+import { Form } from "react-bootstrap";
+import cookies from "react-cookies";
 import { Tasks } from "../main/Tasks";
 import { TaskContext } from "../../context/TasksContext";
+import { FormControl, Input, VStack, Button } from "@chakra-ui/react";
 
 export const AddTask = () => {
-
-  const {errMsg, getTasks, setErrMsg, setTasks, tasks} = useContext(TaskContext);
-  const [token, setToken] = useState(cookies.load('token'));
+  const { errMsg, getTasks, setErrMsg, setTasks, tasks } =
+    useContext(TaskContext);
+  const [token, setToken] = useState(cookies.load("token"));
 
   const handleLogout = () => {
-    cookies.remove('token');
-    cookies.remove('id');
-    cookies.remove('userName');
-    cookies.remove('role');
-    cookies.remove('capabilities');
-    setToken(cookies.load('token'));
-  }
-  
+    cookies.remove("token");
+    cookies.remove("id");
+    cookies.remove("userName");
+    cookies.remove("role");
+    cookies.remove("capabilities");
+    setToken(cookies.load("token"));
+  };
+
   const handleDelete = (id) => {
     const url = `${process.env.REACT_APP_EXPRESS_URL}/task/${id}`;
     const url2 = `${process.env.REACT_APP_EXPRESS_URL}/task`;
-    axios.delete(url,{
+    axios
+      .delete(url, {
         headers: {
-            Authorization: `Bearer ${cookies.load('token')}`
-        }
-    })
-    .then(resolve =>{
+          Authorization: `Bearer ${cookies.load("token")}`,
+        },
+      })
+      .then((resolve) => {
         alert(resolve.data);
-        axios.get(url2,{
-          headers:{
-              Authorization: `Bearer ${cookies.load('token')}`
-          }
-      }).then(resolve => setTasks(resolve.data))
-      .catch(rejected => setErrMsg("Error while fetching data"));
-    })
-    .catch(rejected => alert(rejected.response.data));
-
+        axios
+          .get(url2, {
+            headers: {
+              Authorization: `Bearer ${cookies.load("token")}`,
+            },
+          })
+          .then((resolve) => setTasks(resolve.data))
+          .catch((rejected) => setErrMsg("Error while fetching data"));
+      })
+      .catch((rejected) => alert(rejected.response.data));
   };
-
 
   const handleAdd = (e) => {
     e.preventDefault();
     const url = `${process.env.REACT_APP_EXPRESS_URL}/task`;
     let data = {
-        title:e.target.formBasicTitle.value,
-        description: e.target.formBasicDescription.value
-    }
-    axios.post(url,data,{
+      title: e.target.formBasicTitle.value,
+      description: e.target.formBasicDescription.value,
+    };
+    axios
+      .post(url, data, {
         headers: {
-            Authorization: `Bearer ${cookies.load('token')}`
-        }
-    })
-    .then(resolve =>{
-        axios.get(url,{
-            headers:{
-                Authorization: `Bearer ${cookies.load('token')}`
-            }
-        }).then(resolve => setTasks(resolve.data))
-        .catch(rejected => setErrMsg("Error while fetching data"));
-    })
-    .catch(rejected => alert(rejected.response.data));
+          Authorization: `Bearer ${cookies.load("token")}`,
+        },
+      })
+      .then((resolve) => {
+        axios
+          .get(url, {
+            headers: {
+              Authorization: `Bearer ${cookies.load("token")}`,
+            },
+          })
+          .then((resolve) => setTasks(resolve.data))
+          .catch((rejected) => setErrMsg("Error while fetching data"));
+      })
+      .catch((rejected) => alert(rejected.response.data));
   };
 
   useEffect(() => {
     getTasks();
-  }, []);
-  
+  }, [getTasks]);
+
   return (
-    <div >
-        {
-            token&&
-            <div >
-                <button style={{float:'left', margin: '-25px 0px 0px 25px'}} onClick={handleLogout}>Logout</button>
-      <Form className="form-signup" onSubmit={handleAdd}>
-        <Form.Group className="mb-3" controlId="formBasicTitle">
-          <Form.Label>Title</Form.Label>
-          <Form.Control type="text" placeholder="Tilte" />
-        </Form.Group>
+  
+      <div>
+        {token && (
+          <div>
+            <Button
+              mt={4}
+              colorScheme="teal"
+              type="submit"
+              float='right'
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
 
-        <Form.Group className="mb-3" controlId="formBasicDescription">
-          <Form.Label>Description</Form.Label>
-          <Form.Control type="text" placeholder="Description" />
-        </Form.Group>
+            <Form onSubmit={handleAdd}>
+              <VStack
+                spacing="4"
+                w="md"
+                m="auto"
+                border="solid"
+                borderWidth="thin"
+                p="3"
+                borderRadius="lg"
+                bgGradient="linear(#EDF2F7,#E2E8F0, #CBD5E0)"
+              >
+                <FormControl pt="25">
+                  <Input
+                    type="text"
+                    placeholder="Title"
+                    id="formBasicTitle"
+                    border="solid"
+                    borderColor="black"
+                    borderWidth="thin"
+                  />
+                </FormControl>
+                <FormControl>
+                  <Input
+                    type="text"
+                    placeholder="Description"
+                    id="formBasicDescription"
+                    border="solid"
+                    borderColor="black"
+                    borderWidth="thin"
+                  />
+                </FormControl>
 
-        <Button variant="primary" type="submit">
-          Add Task
-        </Button>
-      </Form>
-      <Tasks tasks={tasks} handleDelete={handleDelete}/>
-      {
-        errMsg && 
-        <h2>{errMsg}</h2>
-      }
+                <FormControl>
+                  <Button mt={4} colorScheme="teal" type="submit">
+                    Add Task
+                  </Button>
+                </FormControl>
+              </VStack>
+            </Form>
+            <Tasks tasks={tasks} handleDelete={handleDelete} />
+            {errMsg && <h2>{errMsg}</h2>}
+          </div>
+        )}
+        {!cookies.load("token") && (
+          <h4 data-testid="task">
+            Token Expired !!
+            <br /> Signin again{" "}
+          </h4>
+        )}
       </div>
-        }
-        {
-            !cookies.load('token') &&
-            <h4 data-testid='task'>Token Expired !!<br/> Signin again </h4>
-        }
-    </div>
   );
 };

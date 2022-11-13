@@ -1,7 +1,16 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Modal, Form, Button } from "react-bootstrap";
+import {  Form, Button } from "react-bootstrap";
 import cookies from 'react-cookies';
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
 export const UpdateModal = (props) => {
     const [msg, setMsg] = useState('');
 
@@ -24,6 +33,42 @@ export const UpdateModal = (props) => {
   return (
     <div>
       <Modal
+        // initialFocusRef={props.show}
+        // finalFocusRef={finalRef}
+        isOpen={props.show}
+        onClose={props.handleClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Update post</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+          <Form onSubmit={handleEdit}>
+            <Form.Group className="mb-4" controlId="formBasicTitle">
+              <Form.Label>Title of the task</Form.Label>
+              <Form.Control type="text" placeholder="Enter the title" />
+            </Form.Group>
+
+            <Form.Group className="mb-4" controlId="formBasicDescription">
+              <Form.Label>Description</Form.Label>
+              <Form.Control type="text" placeholder="Enter the description" />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
+          </ModalBody>
+
+          <ModalFooter>
+          { msg &&
+            <p>{msg}</p>
+            }
+            
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      {/* ////////////////////////////////////////// */}
+      {/* <Modal
         show={props.show}
         onHide={props.handleClose}
         backdrop="static"
@@ -53,7 +98,7 @@ export const UpdateModal = (props) => {
             <p>{msg}</p>
             }
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };
