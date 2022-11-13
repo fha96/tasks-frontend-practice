@@ -1,9 +1,19 @@
 import { useContext, useState } from "react";
-import { Button, Table } from "react-bootstrap";
+
 import { AddStatus } from "../update/AddStatus";
 import { UpdateModal } from "../update/UpdateModal";
 import { TaskContext } from "../../context/TasksContext";
-
+import {
+  Table,
+  Thead,
+  Tbody,
+  Button,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+  HStack,
+} from '@chakra-ui/react'
 export const Tasks = (props) => {
   const { getTasks, canDo } = useContext(TaskContext);
   const [show, setShow] = useState(false);
@@ -13,65 +23,87 @@ export const Tasks = (props) => {
   };
 
   return (
+    <>
     <div>
-      <Table
-        striped="columns"
-        style={{ width: "85%", margin: "0 auto", border: "5px solid" }}
+      <TableContainer
+         m="auto"
+         border="solid"
+         borderWidth="thin"
+         p="3"
+         borderRadius="lg"
+         bgGradient="linear(#EDF2F7,#E2E8F0, #CBD5E0)"
+         striped="columns"
+        cellSpacing='5'
+      
+        borderColor='blackAlpha.100'
+      
       >
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Status</th>
-            {props.role === "admin" && <th>Admin</th>}
-          </tr>
-        </thead>
-        <tbody>
+      <Table
+        
+      >
+        <Thead>
+          <Tr  borderBottom='solid black'>
+   
+            <Th>#</Th>
+            <Th>Title</Th>
+            <Th>Description</Th>
+            <Th>Status</Th>
+            {props.role === "admin" && <Th>Admin</Th>}
+
+          </Tr >
+
+        </Thead>
+        <Tbody>
           {props.tasks.map((item, idx) => {
             return (
-              <tr key={idx}>
-                <td>{item.id}</td>
-                <td>{item.title}</td>
-                <td>{item.description}</td>
-                <td>
+              <Tr key={idx}  borderBottom='solid black'>
+    
+
+                <Td w='esm'>{item.id}</Td>
+     
+                <Td w='esm'>{item.title}</Td>
+  
+                <Td w='esm'>{item.description}</Td>
+                <Td w='esm'>
                   <Table>
-                    <thead>
-                      <tr>
-                        <th>
+                    <Thead>
+                      <Tr>
+                        <Th>
                           {" "}
-                          <td>
+                          <Td>
                             <AddStatus id={item.id} tasks={props.tasks} />
-                          </td>{" "}
-                        </th>
-                      </tr>
-                      <tr>
-                        <th>name</th>
-                        <th>Descrip.</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+                          </Td>{" "}
+                        </Th>
+                      </Tr>
+                      <Tr>
+                        <Th>name</Th>
+                        <Th>Descrip.</Th>
+                      </Tr>
+             
+                    </Thead>
+                    <Tbody>
                       {item.statuses &&
                         item.statuses.map((item, idx) => {
                           return (
-                            <tr key={idx}>
-                              <td>{item.name}</td>
-                              <td>{item.description}</td>
-                            </tr>
+                            <Tr key={idx}>
+                              <Td>{item.name}</Td>
+                              <Td>{item.description}</Td>
+                            </Tr>
                           );
                         })}
-                    </tbody>
+                    </Tbody>
                   </Table>
-                </td>
+                </Td>
+     
                 {canDo() && (
-                  <td>
-                    <Button onClick={() => props.handleDelete(item.id)}>
+                  <Td>
+                    <Button colorScheme="teal" onClick={() => props.handleDelete(item.id)}>
                       Delete
                     </Button>
                     <br />
                     <br />
                     <br />
-                    <Button onClick={handleShowModal}>Edit</Button>
+                    <Button colorScheme="teal" onClick={handleShowModal}>Edit</Button>
                     {show && (
                       <UpdateModal
                         show={show}
@@ -82,13 +114,15 @@ export const Tasks = (props) => {
                         id={item.id}
                       />
                     )}
-                  </td>
+                  </Td>
                 )}
-              </tr>
+              </Tr>
             );
           })}
-        </tbody>
+        </Tbody>
       </Table>
+      </TableContainer>
     </div>
+    </>
   );
 };

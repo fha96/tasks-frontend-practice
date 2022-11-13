@@ -1,12 +1,32 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Heading,
+} from "@chakra-ui/react";
 
 
 export const Header = () => {
   return (
-    <div data-testid='head'>
-      <h1>Follow up and Update your organization tasks here :)</h1>
+    <div data-testid="head">
+      <Heading size="lg" p='2' fontStyle='italic' fontSize="50px" bg='blackAlpha.400'>
+        Follow up and Update your organization tasks here :)
+      </Heading>
+      <Breadcrumb spacing="8px" p='5' bg= '#E2E8F0' mt='0'>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/tasks">Tasks</BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem >
+          <BreadcrumbLink href="/signup">Registration</BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
+
+{/* 
       <Navbar bg="light" expand="lg">
         <Container>
           <Navbar.Brand>Tasks Management </Navbar.Brand>
@@ -19,7 +39,7 @@ export const Header = () => {
             </Nav>
           </Navbar.Collapse>
         </Container>
-      </Navbar>
+      </Navbar> */}
     </div>
   );
 };
