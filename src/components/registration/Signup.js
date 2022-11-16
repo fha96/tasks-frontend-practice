@@ -56,7 +56,7 @@ export const Signup = () => {
           borderWidth="thin"
           p="3"
           borderRadius="lg"
-          bgGradient="linear(#CBD5E0,#EDF2F7,  #E2E8F0)"
+          bgGradient="linear(primary.100,primary.200,primary.300)"
         >
           <FormControl>
             <Input type="email" placeholder="Email" id="formBasicEmail" border="solid"

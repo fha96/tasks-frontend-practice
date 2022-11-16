@@ -1,4 +1,4 @@
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { Link, Navigate } from "react-router-dom";
 import "./signup.css";
 import {
@@ -6,6 +6,7 @@ import {
   FormHelperText,
   Input,
   VStack,
+  Button
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import { LoginContext } from "../../context/LoginContext";
@@ -24,7 +25,7 @@ export const Signin = () => {
           borderWidth="thin"
           p="3"
           borderRadius="lg"
-          bgGradient="linear(#CBD5E0,#EDF2F7,  #E2E8F0)"
+          bgGradient="linear(primary.100,primary.200,primary.300)"
         >
           <FormControl pt="25">
             <Input
@@ -46,9 +47,8 @@ export const Signin = () => {
               borderWidth="thin"
             />
           </FormControl>
-
-          <FormControl>
-            <Button mt={4} colorScheme="teal" type="submit">
+          <FormControl >
+            <Button mt={4}  colorScheme="teal" type="submit">
               Sign in
             </Button>
           </FormControl>
