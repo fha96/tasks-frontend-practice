@@ -18,11 +18,14 @@ export const theme = extendTheme({
             200 :'#DC5F00',
         }
     },
-  textStyle : {
-        h1 : {
-            fontSize : ['48px', '72px'],
-            fontWeight : 'bold',
-            letterSpacing: '10px'
+    fontWeights :{
+        fha :{
+            1 :'bold'
+        }
+    },
+    paddings:{
+        fha : {
+            1 : '100%'
         }
     }
 });
