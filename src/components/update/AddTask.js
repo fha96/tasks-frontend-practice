@@ -84,6 +84,7 @@ export const AddTask = () => {
               type="submit"
               float='right'
               onClick={handleLogout}
+              textStyle = 'h1.letterSpacing'
             >
               Logout
             </Button>
@@ -97,7 +98,7 @@ export const AddTask = () => {
                 borderWidth="thin"
                 p="3"
                 borderRadius="lg"
-                bgGradient="linear(#EDF2F7,#E2E8F0, #CBD5E0)"
+                bgGradient="linear(secondery.100,secondery.300)"
               >
                 <FormControl pt="25">
                   <Input
@@ -117,6 +118,7 @@ export const AddTask = () => {
                     border="solid"
                     borderColor="black"
                     borderWidth="thin"
+                    
                   />
                 </FormControl>
 

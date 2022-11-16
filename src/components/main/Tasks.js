@@ -33,8 +33,7 @@ export const Tasks = (props) => {
          striped="columns"
         cellSpacing='5'
         w='-webkit-max-content'
-        borderColor='blackAlpha.100'
-      
+        borderColor='secondery.200'
       >
       <Table
         
@@ -95,13 +94,13 @@ export const Tasks = (props) => {
      
                 {canDo() && (
                   <Td>
-                    <Button colorScheme="teal" onClick={() => props.handleDelete(item.id)}>
+                    <Button colorScheme="red" onClick={() => props.handleDelete(item.id)}>
                       Delete
                     </Button>
                     <br />
                     <br />
                     <br />
-                    <Button colorScheme="teal" onClick={handleShowModal}>Edit</Button>
+                    <Button colorScheme="blue" onClick={handleShowModal}>Edit</Button>
                     {show && (
                       <UpdateModal
                         show={show}
