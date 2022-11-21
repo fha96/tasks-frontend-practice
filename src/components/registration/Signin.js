@@ -1,6 +1,8 @@
 import { Form } from "react-bootstrap";
 import { Link, Navigate } from "react-router-dom";
 import "./signup.css";
+import base64 from 'base-64';
+import cookies from 'react-cookies';
 import {
   FormControl,
   FormHelperText,
@@ -8,12 +10,60 @@ import {
   VStack,
   Button
 } from "@chakra-ui/react";
-import { useContext } from "react";
-import { LoginContext } from "../../context/LoginContext";
+// import { useContext } from "react";
+// import { LoginContext } from "../../context/LoginContext";
+import { useSelector, useDispatch } from 'react-redux';
+import {login} from '../../features/registration';
+import axios from "axios";
+import { actionType } from "../../reducers/actionType";
 
 export const Signin = () => {
-  const { handleSignin, state } = useContext(LoginContext);
+  // const { handleSignin, state } = useContext(LoginContext);
+  const register = useSelector(state => state.LoginReducer.value);
+  const dispatch = useDispatch();
+  console.log(register.success);
+  const handleSignin = (e) => {
+    e.preventDefault();
+    const url = `${process.env.REACT_APP_EXPRESS_URL}/signin`;
+    let data = {
+      userName: e.target.formBasicUserName.value,
+      password: e.target.formBasicPassword.value,
+    };
+    console.log(data);
 
+    let encoded = base64.encode(data.userName + ":" + data.password);
+    axios
+      .post(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Basic ${encoded}`,
+          },
+        }
+      )
+      .then((resolve) => {
+        cookies.save("userName", resolve.data.userName);
+        cookies.save("id", resolve.data.id);
+        cookies.save("role", resolve.data.role);
+        cookies.save("token", resolve.data.token);
+        cookies.save("capabilities", JSON.stringify(resolve.data.capabilities));
+        console.log(dispatch(login({type : actionType.LOGIN_SUCCESS})));
+        console.log(register.success);
+     
+      })
+      .catch((rejected) => {
+        dispatch(
+          login({
+          type: actionType.LOGIN_FAIL,
+          payload: {
+            errMsg: rejected.response.data.message,
+          },
+        })
+        );
+        console.log(register.errMsg);
+      });
+  };
   return (
     <div>
       <Form onSubmit={handleSignin}>
@@ -63,10 +113,16 @@ export const Signin = () => {
             </FormHelperText>
           </FormControl>
 
-          {state.success && <Navigate to="/tasks" />}
-          {state.showError && (
+          {register.success && <Navigate to="/tasks" />}
+          {/* {state.success && <Navigate to="/tasks" />} */}
+          {/* {state.showError && (
             <FormControl>
               <FormHelperText color="red.500">{state.errMsg} !</FormHelperText>
+            </FormControl>
+          )} */}
+          {register.showError && (
+            <FormControl>
+              <FormHelperText color="red.500">{register.errMsg} !</FormHelperText>
             </FormControl>
           )}
         </VStack>
