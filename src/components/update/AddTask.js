@@ -5,8 +5,11 @@ import cookies from "react-cookies";
 import { Tasks } from "../main/Tasks";
 import { TaskContext } from "../../context/TasksContext";
 import { FormControl, Input, VStack, Button } from "@chakra-ui/react";
+import { useSelector, useDispatch } from "react-redux";
+
 
 export const AddTask = () => {
+  const task = useSelector(tasks => tasks.TaskReducer.value);
   const { errMsg, getTasks, setErrMsg, setTasks, tasks } =
     useContext(TaskContext);
   const [token, setToken] = useState(cookies.load("token"));

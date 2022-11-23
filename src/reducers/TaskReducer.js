@@ -5,17 +5,17 @@ export const taskReducer = (state, action) => {
     case actionType.ADD_TASK:
       return {
         ...state,
-        tasks: action.payload.tasks,
-        role: action.payload.role,
-        capabilities: action.payload.capabilities,
+        tasks: action.payload.payload.tasks,
+        role: action.payload.payload.role,
+        capabilities: action.payload.payload.capabilities,
       };
     case actionType.ADD_FAIL:
       return {
         ...state,
-        errMsg: action.payload.errMsg,
+        errMsg: action.payload.payload.errMsg,
       };
       case actionType.DELETE_TASK:
-        return state.tasks.filter(item => item.id !== action.payload.id)
+        return state.tasks.filter(item => item.id !== action.payload.payload.id)
     default:
       return state;
   }
