@@ -10,10 +10,11 @@ import { theme } from "./theme";
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import LoginReducer from './features/registration';
-
+import TaskReducer from './features/tasks';
 const store = configureStore({
   reducer:{
-    LoginReducer
+    LoginReducer,
+    TaskReducer
   },
 });
 const root = ReactDOM.createRoot(document.getElementById("root"));
